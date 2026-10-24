@@ -1,36 +1,218 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Задание </title>
-<style>
-  body, html {
-    margin: 0; padding: 0; height: 100%;
-    background: url('Stich.jpg') no-repeat center center fixed;
-    background-size: cover;
-    display: flex; justify-content: center; align-items: center;
-    font-family: Arial, sans-serif;
-  }
-  .container {
-    background: rgba(255, 255, 255, 0.8);
-    padding: 50px;
-    border-radius: 75px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    width: 60%;
-    max-width: 600px;
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: 750;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Задание 1.1</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body, html {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #e8e4d8;
+      padding: 16px;
+      font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+    }
+
+    /* Внешний пунктирный контур карточки (линия отреза) */
+    .card-wrapper {
+      width: 100%;
+      max-width: 440px; /* Оптимальная ширина под карточку */
+      padding: 8px;
+      border: 1.5px dashed #8b929a;
+      border-radius: 4px;
+      background: #fbf9f4;
+      box-shadow: 0 8px 24px rgba(18, 38, 70, 0.12);
+    }
+
+    /* Основное тело карточки под плитку/пергамент */
+    .card {
+      position: relative;
+      background: #FAF6EE;
+      border: 7px solid #14427b; /* Кобальтово-синяя рамка */
+      padding: 34px 20px 22px;   /* Компактные внутренние поля */
+      text-align: center;
+      box-shadow: inset 0 0 0 2px #FAF6EE, inset 0 0 0 3px #14427b;
+    }
+
+    /* Медальон с номером сверху */
+    .badge {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 36px;
+      height: 36px;
+      background: #FAF6EE;
+      border: 2.5px solid #14427b;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #14427b;
+      box-shadow: 0 0 0 3px #FAF6EE;
+    }
+
+    /* Тонкая внутренняя рамка */
+    .inner-frame {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      right: 6px;
+      bottom: 6px;
+      border: 1px solid rgba(20, 66, 123, 0.35);
+      pointer-events: none;
+    }
+
+    /* Угловые завитки */
+    .corner {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      fill: none;
+      stroke: #14427b;
+      stroke-width: 1.4;
+      pointer-events: none;
+      opacity: 0.8;
+    }
+    .corner-tl { top: 9px; left: 9px; }
+    .corner-tr { top: 9px; right: 9px; transform: scaleX(-1); }
+    .corner-bl { bottom: 9px; left: 9px; transform: scaleY(-1); }
+    .corner-br { bottom: 9px; right: 9px; transform: scale(-1, -1); }
+
+    /* Текст на португальском */
+    .task-pt {
+      font-size: 1.25rem;
+      line-height: 1.35;
+      font-weight: 600;
+      color: #12345d;
+      margin-bottom: 12px;
+      letter-spacing: 0.1px;
+    }
+
+    /* Разделитель между языками */
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 10px auto;
+      width: 60%;
+    }
+    .divider::before, .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: #14427b;
+      opacity: 0.35;
+    }
+    .divider span {
+      color: #14427b;
+      font-size: 0.85rem;
+    }
+
+    /* Текст на русском */
+    .task-ru {
+      font-size: 1.15rem;
+      line-height: 1.35;
+      font-style: italic;
+      color: #2b2b2b;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <p>Скажи три раза очень быстро: «Кошка мышку ловит ловко» </p>
-<p> Diga três vezes bem rápido: "O gato pega o rato com jeito" </p>
+
+  <div class="card-wrapper">
+    <div class="card">
+      <!-- Номер карточки -->
+      <div class="badge">1</div>
+
+      <!-- Внутренняя рамка и уголки -->
+      <div class="inner-frame"></div>
+
+      <svg class="corner corner-tl" viewBox="0 0 40 40">
+        <path d="M 3 35 C 3 12 12 3 35 3 M 7 30 C 7 15 15 7 30 7 M 12 12 C 16 15 16 18 13 21 C 10 24 15 28 20 24" stroke-linecap="round"/>
+        <circle cx="12" cy="12" r="2" fill="#14427b"/>
+      </svg>
+      <svg class="corner corner-tr" viewBox="0 0 40 40">
+        <path d="M 3 35 C 3 12 12 3 35 3 M 7 30 C 7 15 15 7 30 7 M 12 12 C 16 15 16 18 13 21 C 10 24 15 28 20 24" stroke-linecap="round"/>
+        <circle cx="12" cy="12" r="2" fill="#14427b"/>
+      </svg>
+      <svg class="corner corner-bl" viewBox="0 0 40 40">
+        <path d="M 3 35 C 3 12 12 3 35 3 M 7 30 C 7 15 15 7 30 7 M 12 12 C 16 15 16 18 13 21 C 10 24 15 28 20 24" stroke-linecap="round"/>
+        <circle cx="12" cy="12" r="2" fill="#14427b"/>
+      </svg>
+      <svg class="corner corner-br" viewBox="0 0 40 40">
+        <path d="M 3 35 C 3 12 12 3 35 3 M 7 30 C 7 15 15 7 30 7 M 12 12 C 16 15 16 18 13 21 C 10 24 15 28 20 24" stroke-linecap="round"/>
+        <circle cx="12" cy="12" r="2" fill="#14427b"/>
+      </svg>
+      
+      <p class="task-ru">Praça da Liberdade (Liberty Square) and King Pedro IV
+1. History of Praça da Liberdade
+Today, this is the heart of Porto, but it was once covered with vegetable gardens and orchards. In the 18th century, Praça Nova (New Square) was established here, gradually evolving into the city’s political and civic center.
+Citizens gathered here to debate politics, celebrate public festivities, and hold demonstrations. The square was later renamed Praça da Liberdade (Liberty Square) to commemorate the struggle for constitutional rights.
+2. Who Was Pedro IV?
+At the center of the square stands the equestrian statue of King Pedro IV, inaugurated on October 19, 1866.
+He led an extraordinary life: he served simultaneously as Pedro I, the first Emperor of independent Brazil, and Pedro IV, King of Portugal.
+In 1826, he granted Portugal the Constitutional Charter (Carta Constitucional), which curtailed absolute royal power and established a constitutional monarchy.
+However, his brother Miguel seized the throne and restored absolutism, sparking a civil war between liberal constitutionalists and royal absolutists.
+In 1832, Pedro landed troops in northern Portugal. The city of Porto rallied behind him and endured the grueling Siege of Porto (1832–1833). The liberal victory in 1834 ultimately restored the constitutional monarchy.
+3. What Is the King Holding?
+Looking closely at the rider, he holds the reins in one hand and the Constitutional Charter of 1826 in the other.
+This document—rather than a sword or a royal scepter—serves as the monument’s core symbol, representing constitutional freedoms and civic rights.
+Bronze reliefs along the pedestal depict the landing of Pedro’s troops at Mindelo and his bond with Porto.
+Quest Mission: The King's Secret Document
+Find the king on horseback and answer these three questions:
+ * What is the king holding in his hand instead of a sword?
+ * How many front hooves has his horse raised?
+ * Where is the king’s actual heart kept today?
+ * Answers: The Constitutional Charter; one front hoof; Lapa Church (Igreja da Lapa) in Porto.
+ * Story Prompt: The king bequeathed his heart to the city, but hid the secret of freedom within this document. Spot it and call out the password: LIBERDADE! ("Liberty!").
+Napoleon, the Royal Flight to Brazil, and Pedro IV
+1. Why Did Pedro’s Father Flee to Brazil?
+By 1807, Napoleon Bonaparte controlled most of continental Europe and sought to economically isolate Great Britain through the Continental Blockade.
+Portugal had been an ally of England for centuries and refused to sever its trade ties. Napoleon issued an ultimatum: close Portuguese ports to British shipping or face an invasion.
+Pedro's father, Prince Regent João (later King João VI), faced an impossible dilemma. In November 1807, with French troops closing in on Lisbon, he chose not to wait.
+On November 29, 1807, the royal family set sail for Brazil escorted by the British Royal Navy. Accompanying them were court nobility, government officials, and servants—an estimated 10,000 to 15,000 people. They transported vast state wealth, regalia, jewels, and treasury reserves. Historical records confirm that when João VI returned to Portugal in 1821, he brought most of the royal treasures back with him.
+2. What Happened to Young Pedro?
+Pedro was only nine years old when he crossed the Atlantic.
+He grew up in Brazil and, in 1822, declared its independence from Portugal, becoming Pedro I, Brazil’s first Emperor.
+Following his father's death in 1826, he briefly assumed the Portuguese crown as Pedro IV before passing it to his daughter, Maria II.
+How Many Times Did Napoleon Visit Portugal and Porto?
+Napoleon himself never set foot in Portugal. His armies invaded the country three separate times:
+| Year | Commander | Outcome |
+|---|---|---|
+| 1807 | General Jean-Andoche Junot | French troops captured Lisbon; the royal court escaped by sea. |
+| 1809 | Marshal Nicolas Soult | Captured Porto and occupied the city for roughly six weeks. |
+| 1810–1811 | Marshal André Masséna | Launched a third invasion, but failed to penetrate Lisbon’s defenses. |
+Porto itself was occupied directly only once, in 1809.
+3. Porto’s Most Tragic Day: The Ponte das Barcas Disaster
+On March 29, 1809, Marshal Soult’s troops stormed Porto.
+Panicked residents rushed toward the Douro River to escape to the south bank. At the time, the metal Dom Luís I Bridge did not exist; the river was crossed via a pontoon bridge of linked wooden barges called the Ponte das Barcas.
+Under the crushing weight of the fleeing crowd, sections of the pontoon bridge collapsed. Thousands plunged into the river and drowned; historical estimates suggest around 4,000 casualties. Today, the Alminhas da Ponte relief in Ribeira commemorates those lost.
+French forces held Porto until May 1809, when an Anglo-Portuguese force commanded by Sir Arthur Wellesley (later the Duke of Wellington) drove them out.
+4. Why Is It Named Liberty Square?
+In the wake of the French invasions, Portugal endured severe hardships: the royal court remained in Rio de Janeiro, the domestic economy foundered, and British military governors oversaw governance.
+On August 24, 1820, the Liberal Revolution erupted in Porto. Citizens and military officers demanded the return of the king, the convening of a parliament (Cortes), and the drafting of a constitution.
+Pedro IV later returned to defend this constitutional cause against his absolutist brother, Miguel. The square also witnessed dark days: in 1829, several prominent liberal figures were publicly executed here under Miguelist rule.
+</p>
+    </div>
   </div>
+
 </body>
 </html>
-
-

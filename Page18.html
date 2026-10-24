@@ -1,34 +1,187 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Задание 18</title>
-<style>
-  body, html {
-    margin: 0; padding: 0; height: 100%;
-    background: linear-gradient(1deg, red, orange, yellow, green, blue, indigo, violet);
-    display: flex; justify-content: center; align-items: center;
-    font-family: Arial, sans-serif;
-  }
-  .container {
-    background: white;
-    padding: 50px;
-    border-radius: 75px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    width: 60%;
-    max-width: 1000px;
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: 750;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Задание 1.1</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body, html {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #e8e4d8;
+      padding: 16px;
+      font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+    }
+
+    /* Внешний пунктирный контур карточки (линия отреза) */
+    .card-wrapper {
+      width: 100%;
+      max-width: 440px; /* Оптимальная ширина под карточку */
+      padding: 8px;
+      border: 1.5px dashed #8b929a;
+      border-radius: 4px;
+      background: #fbf9f4;
+      box-shadow: 0 8px 24px rgba(18, 38, 70, 0.12);
+    }
+
+    /* Основное тело карточки под плитку/пергамент */
+    .card {
+      position: relative;
+      background: #FAF6EE;
+      border: 7px solid #14427b; /* Кобальтово-синяя рамка */
+      padding: 34px 20px 22px;   /* Компактные внутренние поля */
+      text-align: center;
+      box-shadow: inset 0 0 0 2px #FAF6EE, inset 0 0 0 3px #14427b;
+    }
+
+    /* Медальон с номером сверху */
+    .badge {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 36px;
+      height: 36px;
+      background: #FAF6EE;
+      border: 2.5px solid #14427b;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #14427b;
+      box-shadow: 0 0 0 3px #FAF6EE;
+    }
+
+    /* Тонкая внутренняя рамка */
+    .inner-frame {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      right: 6px;
+      bottom: 6px;
+      border: 1px solid rgba(20, 66, 123, 0.35);
+      pointer-events: none;
+    }
+
+    /* Угловые завитки */
+    .corner {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      fill: none;
+      stroke: #14427b;
+      stroke-width: 1.4;
+      pointer-events: none;
+      opacity: 0.8;
+    }
+    .corner-tl { top: 9px; left: 9px; }
+    .corner-tr { top: 9px; right: 9px; transform: scaleX(-1); }
+    .corner-bl { bottom: 9px; left: 9px; transform: scaleY(-1); }
+    .corner-br { bottom: 9px; right: 9px; transform: scale(-1, -1); }
+
+    /* Текст на португальском */
+    .task-pt {
+      font-size: 1.25rem;
+      line-height: 1.35;
+      font-weight: 600;
+      color: #12345d;
+      margin-bottom: 12px;
+      letter-spacing: 0.1px;
+    }
+
+    /* Разделитель между языками */
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 10px auto;
+      width: 60%;
+    }
+    .divider::before, .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: #14427b;
+      opacity: 0.35;
+    }
+    .divider span {
+      color: #14427b;
+      font-size: 0.85rem;
+    }
+
+    /* Текст на русском */
+    .task-ru {
+      font-size: 1.15rem;
+      line-height: 1.35;
+      font-style: italic;
+      color: #2b2b2b;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <p>Сделай «позу статуи» на 10 секунд, остальные пытаются рассмешить</p>
-    <p>Fica na «postura da estátua» durante 10 segundos, enquanto os outros tentam fazer-te rir</p>
+
+  <div class="card-wrapper">
+    <div class="card">
+      <!-- Номер карточки -->
+      <div class="badge">1</div>
+
+      <!-- Внутренняя рамка и уголки -->
+      <div class="inner-frame"></div>
+
+      <svg class="corner corner-tl" viewBox="0 0 40 40">
+        <path d="M 3 35 C 3 12 12 3 35 3 M 7 30 C 7 15 15 7 30 7 M 12 12 C 16 15 16 18 13 21 C 10 24 15 28 20 24" stroke-linecap="round"/>
+        <circle cx="12" cy="12" r="2" fill="#14427b"/>
+      </svg>
+      <svg class="corner corner-tr" viewBox="0 0 40 40">
+        <path d="M 3 35 C 3 12 12 3 35 3 M 7 30 C 7 15 15 7 30 7 M 12 12 C 16 15 16 18 13 21 C 10 24 15 28 20 24" stroke-linecap="round"/>
+        <circle cx="12" cy="12" r="2" fill="#14427b"/>
+      </svg>
+      <svg class="corner corner-bl" viewBox="0 0 40 40">
+        <path d="M 3 35 C 3 12 12 3 35 3 M 7 30 C 7 15 15 7 30 7 M 12 12 C 16 15 16 18 13 21 C 10 24 15 28 20 24" stroke-linecap="round"/>
+        <circle cx="12" cy="12" r="2" fill="#14427b"/>
+      </svg>
+      <svg class="corner corner-br" viewBox="0 0 40 40">
+        <path d="M 3 35 C 3 12 12 3 35 3 M 7 30 C 7 15 15 7 30 7 M 12 12 C 16 15 16 18 13 21 C 10 24 15 28 20 24" stroke-linecap="round"/>
+        <circle cx="12" cy="12" r="2" fill="#14427b"/>
+      </svg>
+
+      <p class="task-ru"> How Wellington Liberated Porto Using a Few Boats — May 12, 1809
+This is one of Porto's most gripping stories—how a handful of wine boats helped an entire army cross the river and launch a surprise attack against the French.
+1. The French Believed the City Was Impregnable
+In March 1809, Marshal Soult’s army captured Porto. The French controlled the northern bank of the Douro, while the Anglo-Portuguese army under the command of Sir Arthur Wellesley, the future Duke of Wellington, approached from the south.
+The French had destroyed the pontoon bridge and gathered all available boats onto their side of the river.
+Soult was confident: without a bridge or boats, the enemy could not cross.
+2. The Barber Who Helped Liberate the City
+On the morning of May 12, a local Portuguese barber told the British where the French had concealed several boats.
+With the help of local residents, Lieutenant Colonel John Waters managed to secure a few vessels. According to the prevailing account, they initially retrieved three or four large wine barges.
+Aboard these barges, British soldiers began secretly crossing the Douro, landing near the Seminary building, which the French had left virtually unguarded.
+3. The French Discovered the Soldiers Too Late
+The vanguard British units occupied the seminary and turned it into a fortified defensive position.
+By the time the French noticed the enemy, the British were already firmly entrenched on the northern bank, and a fierce firefight broke out.
+Local residents rushed to assist their liberators, taking their own boats onto the river to ferry across wave after wave of soldiers.
+Marshal Soult realized he could not hold the city and ordered a general retreat.
+On May 12, 1809, Porto was liberated.
+
+</p>
+    </div>
   </div>
+
 </body>
 </html>
-

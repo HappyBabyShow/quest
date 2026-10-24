@@ -1,34 +1,199 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Задание 15</title>
-<style>
-  body, html {
-    margin: 0; padding: 0; height: 100%;
-    background: linear-gradient(1deg, red, orange, yellow, green, blue, indigo, violet);
-    display: flex; justify-content: center; align-items: center;
-    font-family: Arial, sans-serif;
-  }
-  .container {
-    background: white;
-    padding: 50px;
-    border-radius: 75px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    width: 60%;
-    max-width: 1000px;
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: 750;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Задание 1.1</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body, html {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #e8e4d8;
+      padding: 16px;
+      font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+    }
+
+    /* Внешний пунктирный контур карточки (линия отреза) */
+    .card-wrapper {
+      width: 100%;
+      max-width: 440px; /* Оптимальная ширина под карточку */
+      padding: 8px;
+      border: 1.5px dashed #8b929a;
+      border-radius: 4px;
+      background: #fbf9f4;
+      box-shadow: 0 8px 24px rgba(18, 38, 70, 0.12);
+    }
+
+    /* Основное тело карточки под плитку/пергамент */
+    .card {
+      position: relative;
+      background: #FAF6EE;
+      border: 7px solid #14427b; /* Кобальтово-синяя рамка */
+      padding: 34px 20px 22px;   /* Компактные внутренние поля */
+      text-align: center;
+      box-shadow: inset 0 0 0 2px #FAF6EE, inset 0 0 0 3px #14427b;
+    }
+
+    /* Медальон с номером сверху */
+    .badge {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 36px;
+      height: 36px;
+      background: #FAF6EE;
+      border: 2.5px solid #14427b;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #14427b;
+      box-shadow: 0 0 0 3px #FAF6EE;
+    }
+
+    /* Тонкая внутренняя рамка */
+    .inner-frame {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      right: 6px;
+      bottom: 6px;
+      border: 1px solid rgba(20, 66, 123, 0.35);
+      pointer-events: none;
+    }
+
+    /* Угловые завитки */
+    .corner {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      fill: none;
+      stroke: #14427b;
+      stroke-width: 1.4;
+      pointer-events: none;
+      opacity: 0.8;
+    }
+    .corner-tl { top: 9px; left: 9px; }
+    .corner-tr { top: 9px; right: 9px; transform: scaleX(-1); }
+    .corner-bl { bottom: 9px; left: 9px; transform: scaleY(-1); }
+    .corner-br { bottom: 9px; right: 9px; transform: scale(-1, -1); }
+
+    /* Текст на португальском */
+    .task-pt {
+      font-size: 1.25rem;
+      line-height: 1.35;
+      font-weight: 600;
+      color: #12345d;
+      margin-bottom: 12px;
+      letter-spacing: 0.1px;
+    }
+
+    /* Разделитель между языками */
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 10px auto;
+      width: 60%;
+    }
+    .divider::before, .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: #14427b;
+      opacity: 0.35;
+    }
+    .divider span {
+      color: #14427b;
+      font-size: 0.85rem;
+    }
+
+    /* Текст на русском */
+    .task-ru {
+      font-size: 1.15rem;
+      line-height: 1.35;
+      font-style: italic;
+      color: #2b2b2b;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <p>Снять видео с пожеланием имениннику(це).</p>
-      <p>Gravar um vídeo com os votos de feliz aniversário para o(a) aniversariante(s).</p>
+
+  <div class="card-wrapper">
+    <div class="card">
+      <!-- Номер карточки -->
+      <div class="badge">1</div>
+
+      <!-- Внутренняя рамка и уголки -->
+      <div class="inner-frame"></div>
+
+      <svg class="corner corner-tl" viewBox="0 0 40 40">
+        <path d="M 3 35 C 3 12 12 3 35 3 M 7 30 C 7 15 15 7 30 7 M 12 12 C 16 15 16 18 13 21 C 10 24 15 28 20 24" stroke-linecap="round"/>
+        <circle cx="12" cy="12" r="2" fill="#14427b"/>
+      </svg>
+      <svg class="corner corner-tr" viewBox="0 0 40 40">
+        <path d="M 3 35 C 3 12 12 3 35 3 M 7 30 C 7 15 15 7 30 7 M 12 12 C 16 15 16 18 13 21 C 10 24 15 28 20 24" stroke-linecap="round"/>
+        <circle cx="12" cy="12" r="2" fill="#14427b"/>
+      </svg>
+      <svg class="corner corner-bl" viewBox="0 0 40 40">
+        <path d="M 3 35 C 3 12 12 3 35 3 M 7 30 C 7 15 15 7 30 7 M 12 12 C 16 15 16 18 13 21 C 10 24 15 28 20 24" stroke-linecap="round"/>
+        <circle cx="12" cy="12" r="2" fill="#14427b"/>
+      </svg>
+      <svg class="corner corner-br" viewBox="0 0 40 40">
+        <path d="M 3 35 C 3 12 12 3 35 3 M 7 30 C 7 15 15 7 30 7 M 12 12 C 16 15 16 18 13 21 C 10 24 15 28 20 24" stroke-linecap="round"/>
+        <circle cx="12" cy="12" r="2" fill="#14427b"/>
+      </svg>
+
+      <p class="task-ru">How Port Wine Was Born: War, Brandy, and a Treacherous River
+The story of world-renowned Port wine (Vinho do Porto) is filled with chance, maritime perils, and trade disputes.
+1. The Trade War and the Secret of Fortified Wine
+In the late 17th century, England entered a prolonged trade conflict with France, prompting the British Crown to ban the import of French wine. British merchants headed to Portugal to secure an alternative source.
+Venturing up the Douro River, they found bold, robust red wines. However, a major problem arose: during the long, turbulent voyage across the stormy Bay of Biscay, the wine often overheated, spoiled, and turned to vinegar.
+To preserve it, winemakers (tradition credits the monks of Lamego) began adding grape spirit (aguardente) directly into the casks. This high-proof neutral spirit not only stabilized the wine for sea transport, but abruptly halted fermentation: the yeasts died before consuming all the natural grape sugars. The result was a sweet, smooth, and potent wine with an alcohol content of around 19–20%. True Port wine was born.
+2. Rabelo Boats and the Perilous Douro Rapids
+Before modern dams and railways tamed the river, the Douro was swift, rocky, and notoriously treacherous.
+ * Barrels of wine were transported downriver from the valley's steep terraced vineyards aboard flat-bottomed wooden boats called barcos rabelos.
+ * These vessels lacked a deep keel so they wouldn't run aground in shallow waters, and they were steered using a massive stern sweep-oar (espadaela), which required several crewmen to maneuver.
+ * The most hazardous passage was the Cachão da Valeira rapids—a narrow granite gorge plagued by violent whirlpools. Countless boats smashed against the rocks, losing hundreds of barrels to the riverbed. It was here, in 1861, that the prominent British wine figure Baron James Forrester drowned; his heavy money belt filled with gold coins dragged him to the bottom when his boat capsized.
+3. Why Are the Cellars in Gaia, but the Wine Is Called "Porto"?
+Visitors are often surprised to find that all the grand Port wine lodges and historic aging cellars are situated across the river in Vila Nova de Gaia, yet the wine is globally branded as "Porto." This stems from three key factors:
+ * Ecclesiastical Taxes: In the Middle Ages, the Bishop of Porto levied heavy tariffs on merchant goods entering the city. Wine traders bypassed these fees by establishing their warehouses on the southern riverbank in Gaia, which was under royal—not episcopal—jurisdiction.
+ * Ideal Microclimate: The southern bank of the Douro faces north, shielding the lodges from harsh, direct sunlight. The cooler temperatures and damp Atlantic breezes provide optimal conditions for aging wine slowly in oak casks.
+ * Export Point: The wine took the name "Porto" because all export paperwork and tax clearances were certified at Porto's Royal Customs House (Casa do Infante), and shipping vessels departed directly from Porto’s harbor.
+4. The Marquis of Pombal and the War on Counterfeits (1756)
+By the mid-18th century, Port had become so popular across Europe that fraud was rampant: merchants diluted the wine with cheap alcohol and added elderberry juice to mimic a deep, dark color.
+In 1756, Portugal’s Prime Minister, the Marquis of Pombal, took decisive action:
+ * He established strict boundaries for wine production, demarcating the Douro Valley with 335 granite boundary stones (Marcos de Pombal). Wine could only carry the Port designation if the grapes were grown within this perimeter.
+ * He ordered the eradication of elderberry bushes across the region to prevent adulteration.
+Through these measures, the Douro Valley became the world's first officially demarcated and regulated wine region, long before Bordeaux or Champagne.
+Quest Challenges
+ * Riverfront Challenge: Look across the river toward the wooden sailboats. Why did wine merchants move millions of liters of wine across the water to Vila Nova de Gaia?
+   (Answer: To evade the Bishop of Porto’s exorbitant trade taxes and to take advantage of Gaia's cooler, more humid northern-facing microclimate for oak-barrel aging).
+ * Visual Search: Spot a traditional rabelo boat anchored along the riverbank and inspect its cargo deck. How many barrels (pipas) did a traditional vessel carry?
+   (Answer: A typical boat carried between 30 and 70 pipas).
+
+
+</p>
+    </div>
   </div>
+
 </body>
 </html>
-

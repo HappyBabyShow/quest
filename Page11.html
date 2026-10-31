@@ -7,7 +7,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Cormorant+SC:wght@600;700&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -16,176 +16,322 @@
       padding: 0;
     }
 
+    :root {
+      --night-1: #0b1424;
+      --night-2: #14243b;
+      --night-3: #1d3550;
+      --orange: #ff9a1f;
+      --orange-soft: #ffb54d;
+      --orange-deep: #e8680c;
+      --parchment: #d8c49a;
+      --parchment-dark: #a88d5c;
+      --text: #ece4cf;
+    }
+
     body, html {
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: #e8e4d8;
-      padding: 16px;
-      font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+      padding: 24px;
+      font-family: 'Cormorant Garamond', 'Times New Roman', Georgia, serif;
+      background:
+        radial-gradient(ellipse at 50% 0%, #1c2f4a 0%, #0a101c 70%),
+        #0a101c;
     }
 
-    /* Внешний пунктирный контур карточки (линия отреза) */
+    /* Рамка в виде старого пергамента */
     .card-wrapper {
+      padding: 14px;
+      background:
+        radial-gradient(circle at 20% 15%, rgba(255, 240, 200, 0.35), transparent 55%),
+        radial-gradient(circle at 85% 90%, rgba(120, 85, 40, 0.45), transparent 55%),
+        var(--parchment);
+      border: 1.5px dashed var(--parchment-dark);
+      border-radius: 6px;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6), inset 0 0 40px rgba(110, 80, 40, 0.5);
+      max-width: 680px;
       width: 100%;
-      max-width: 440px; /* Оптимальная ширина под карточку */
-      padding: 8px;
-      border: 1.5px dashed #8b929a;
-      border-radius: 4px;
-      background: #fbf9f4;
-      box-shadow: 0 8px 24px rgba(18, 38, 70, 0.12);
     }
 
-    /* Основное тело карточки под плитку/пергамент */
-    .card {
+    /* Ночная карточка со свечением */
+    .night-card {
       position: relative;
-      background: #FAF6EE;
-      border: 7px solid #14427b; /* Кобальтово-синяя рамка */
-      padding: 34px 20px 22px;   /* Компактные внутренние поля */
+      overflow: hidden;
+      padding: 70px 45px 30px;
+      color: var(--text);
       text-align: center;
-      box-shadow: inset 0 0 0 2px #FAF6EE, inset 0 0 0 3px #14427b;
+      background:
+        radial-gradient(circle at 85% 8%, rgba(255, 244, 205, 0.18), transparent 38%),
+        radial-gradient(ellipse at 50% 100%, rgba(255, 154, 31, 0.14), transparent 60%),
+        linear-gradient(180deg, var(--night-3) 0%, var(--night-2) 45%, var(--night-1) 100%);
+      border: 3px solid var(--orange);
+      box-shadow:
+        0 0 18px rgba(255, 154, 31, 0.55),
+        inset 0 0 28px rgba(255, 154, 31, 0.18);
+      animation: flicker 4.5s ease-in-out infinite;
     }
 
-    /* Медальон с номером сверху */
-    .badge {
-      position: absolute;
-      top: -20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 36px;
-      height: 36px;
-      background: #FAF6EE;
-      border: 2.5px solid #14427b;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Playfair Display', serif;
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: #14427b;
-      box-shadow: 0 0 0 3px #FAF6EE;
+    @keyframes flicker {
+      0%, 100% { box-shadow: 0 0 18px rgba(255, 154, 31, 0.55), inset 0 0 28px rgba(255, 154, 31, 0.18); }
+      45% { box-shadow: 0 0 26px rgba(255, 154, 31, 0.8), inset 0 0 34px rgba(255, 154, 31, 0.26); }
+      60% { box-shadow: 0 0 14px rgba(255, 154, 31, 0.45), inset 0 0 24px rgba(255, 154, 31, 0.14); }
     }
 
     /* Тонкая внутренняя рамка */
-    .inner-frame {
+    .inner-border {
       position: absolute;
-      top: 6px;
-      left: 6px;
-      right: 6px;
-      bottom: 6px;
-      border: 1px solid rgba(20, 66, 123, 0.35);
+      inset: 10px;
+      border: 1px solid rgba(255, 181, 77, 0.35);
       pointer-events: none;
     }
 
-    /* Угловые завитки */
-    .corner {
+    /* Бейдж с номером в виде тыквы */
+    .badge {
       position: absolute;
-      width: 28px;
-      height: 28px;
-      fill: none;
-      stroke: #14427b;
-      stroke-width: 1.4;
-      pointer-events: none;
-      opacity: 0.8;
-    }
-    .corner-tl { top: 9px; left: 9px; }
-    .corner-tr { top: 9px; right: 9px; transform: scaleX(-1); }
-    .corner-bl { bottom: 9px; left: 9px; transform: scaleY(-1); }
-    .corner-br { bottom: 9px; right: 9px; transform: scale(-1, -1); }
-
-    /* Текст на португальском */
-    .task-pt {
-      font-size: 1.25rem;
-      line-height: 1.35;
-      font-weight: 600;
-      color: #12345d;
-      margin-bottom: 12px;
-      letter-spacing: 0.1px;
-    }
-
-    /* Разделитель между языками */
-    .divider {
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      margin: 10px auto;
-      width: 60%;
+      font-family: 'Cormorant SC', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #2a1200;
+      background:
+        radial-gradient(ellipse at 50% 35%, #ffc766 0%, var(--orange) 55%, var(--orange-deep) 100%);
+      border-radius: 50% 50% 48% 48% / 55% 55% 45% 45%;
+      box-shadow:
+        0 0 16px rgba(255, 154, 31, 0.85),
+        inset -6px 0 8px rgba(200, 90, 0, 0.45),
+        inset 6px 0 8px rgba(200, 90, 0, 0.45);
     }
-    .divider::before, .divider::after {
+    .badge::before {
       content: "";
-      flex: 1;
-      height: 1px;
-      background: #14427b;
-      opacity: 0.35;
-    }
-    .divider span {
-      color: #14427b;
-      font-size: 0.85rem;
+      position: absolute;
+      top: -9px;
+      left: 50%;
+      width: 8px;
+      height: 12px;
+      transform: translateX(-50%) rotate(8deg);
+      background: #4a5a1c;
+      border-radius: 3px 3px 1px 1px;
     }
 
-    /* Текст на русском */
+    /* Луна */
+    .moon {
+      position: absolute;
+      top: 16px;
+      right: 34px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 38% 35%, #fffdf0 0%, #f1e8c4 60%, #cfc397 100%);
+      box-shadow: 0 0 22px 6px rgba(255, 246, 210, 0.45);
+    }
+
+    /* Паутина в углах */
+    .web {
+      position: absolute;
+      width: 78px;
+      height: 78px;
+      fill: none;
+      stroke: rgba(236, 228, 207, 0.55);
+      stroke-width: 1;
+      pointer-events: none;
+    }
+    .web-tl { top: 0; left: 0; }
+    .web-br { bottom: 0; right: 0; transform: rotate(180deg); }
+
+    /* Летучие мыши */
+    .bat {
+      position: absolute;
+      width: 26px;
+      fill: #05080f;
+      stroke: rgba(255, 154, 31, 0.5);
+      stroke-width: 0.6;
+      pointer-events: none;
+      animation: bat-fly 6s ease-in-out infinite;
+    }
+    .bat-1 { top: 30px; left: 70px; }
+    .bat-2 { top: 62px; left: 110px; width: 18px; animation-delay: -2.5s; }
+    .bat-3 { top: 56px; right: 100px; width: 20px; animation-delay: -4s; }
+
+    @keyframes bat-fly {
+      0%, 100% { transform: translate(0, 0) rotate(-4deg); }
+      50% { transform: translate(10px, -8px) rotate(5deg); }
+    }
+
+    /* Заголовок */
+    .task-title {
+      font-family: 'Cormorant SC', 'Cormorant Garamond', serif;
+      font-size: 2.1rem;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: 0.5px;
+      background: linear-gradient(180deg, #ffd27a 0%, var(--orange) 55%, var(--orange-deep) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 0 8px rgba(255, 154, 31, 0.55));
+    }
+
+    /* Светящаяся линия маршрута */
+    .route {
+      display: block;
+      margin: 14px auto 18px;
+      width: 220px;
+      height: 26px;
+      overflow: visible;
+      filter: drop-shadow(0 0 5px rgba(255, 154, 31, 0.9));
+    }
+    .route path {
+      fill: none;
+      stroke: var(--orange-soft);
+      stroke-width: 2.2;
+      stroke-linecap: round;
+    }
+    .route circle {
+      fill: var(--orange);
+    }
+
+    /* Текст легенды */
     .task-ru {
-      font-size: 1.15rem;
-      line-height: 1.35;
-      font-style: italic;
-      color: #2b2b2b;
+      text-align: left;
+      font-size: 1.32rem;
+      font-weight: 500;
+      line-height: 1.5;
+      color: var(--text);
+    }
+    .task-ru p + p,
+    .task-ru p + ul,
+    .task-ru ul + p {
+      margin-top: 14px;
+    }
+    .task-ru ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .task-ru li {
+      position: relative;
+      padding-left: 30px;
+      margin-top: 8px;
+    }
+    .task-ru li::before {
+      content: "🎃";
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 1.05rem;
+      filter: drop-shadow(0 0 5px rgba(255, 154, 31, 0.85));
+    }
+    .task-ru strong {
+      color: var(--orange-soft);
+      font-weight: 700;
+      text-shadow: 0 0 8px rgba(255, 154, 31, 0.4);
+    }
+
+    /* Нижняя строка с тыквами и призраком */
+    .footer {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-top: 22px;
+      font-size: 2.1rem;
+      line-height: 1;
+    }
+    .footer .pumpkins {
+      filter: drop-shadow(0 0 10px rgba(255, 154, 31, 0.9));
+    }
+    .footer .ghost {
+      opacity: 0.6;
+      filter: drop-shadow(0 0 10px rgba(210, 235, 255, 0.7));
+      animation: float 5s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-9px); }
+    }
+
+    @media (max-width: 520px) {
+      .night-card { padding: 70px 22px 24px; }
+      .task-title { font-size: 1.7rem; }
+      .task-ru { font-size: 1.2rem; }
+      .moon { right: 22px; }
+      .bat-3 { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .night-card, .bat, .footer .ghost { animation: none; }
     }
   </style>
 </head>
 <body>
 
   <div class="card-wrapper">
-    <div class="card">
-      <!-- Номер карточки -->
+    <div class="night-card">
       <div class="badge">1</div>
+      <div class="moon"></div>
+      <div class="inner-border"></div>
 
-      <!-- Внутренняя рамка и уголки -->
-      <div class="inner-frame"></div>
-
-      <svg class="corner corner-tl" viewBox="0 0 40 40">
-        <path d="M 3 35 C 3 12 12 3 35 3 M 7 30 C 7 15 15 7 30 7 M 12 12 C 16 15 16 18 13 21 C 10 24 15 28 20 24" stroke-linecap="round"/>
-        <circle cx="12" cy="12" r="2" fill="#14427b"/>
+      <!-- Паутина -->
+      <svg class="web web-tl" viewBox="0 0 80 80">
+        <path d="M0 0 L80 0 M0 0 L72 30 M0 0 L52 52 M0 0 L30 72 M0 0 L0 80"/>
+        <path d="M22 0 Q18 18 0 22 M44 0 Q36 36 0 44 M66 0 Q52 52 0 66"/>
       </svg>
-      <svg class="corner corner-tr" viewBox="0 0 40 40">
-        <path d="M 3 35 C 3 12 12 3 35 3 M 7 30 C 7 15 15 7 30 7 M 12 12 C 16 15 16 18 13 21 C 10 24 15 28 20 24" stroke-linecap="round"/>
-        <circle cx="12" cy="12" r="2" fill="#14427b"/>
-      </svg>
-      <svg class="corner corner-bl" viewBox="0 0 40 40">
-        <path d="M 3 35 C 3 12 12 3 35 3 M 7 30 C 7 15 15 7 30 7 M 12 12 C 16 15 16 18 13 21 C 10 24 15 28 20 24" stroke-linecap="round"/>
-        <circle cx="12" cy="12" r="2" fill="#14427b"/>
-      </svg>
-      <svg class="corner corner-br" viewBox="0 0 40 40">
-        <path d="M 3 35 C 3 12 12 3 35 3 M 7 30 C 7 15 15 7 30 7 M 12 12 C 16 15 16 18 13 21 C 10 24 15 28 20 24" stroke-linecap="round"/>
-        <circle cx="12" cy="12" r="2" fill="#14427b"/>
+      <svg class="web web-br" viewBox="0 0 80 80">
+        <path d="M0 0 L80 0 M0 0 L72 30 M0 0 L52 52 M0 0 L30 72 M0 0 L0 80"/>
+        <path d="M22 0 Q18 18 0 22 M44 0 Q36 36 0 44 M66 0 Q52 52 0 66"/>
       </svg>
 
-      <p class="task-ru">Porto Cathedral — Sé do Porto
-Perched atop the Pena Ventosa hill, this vantage point was once used to monitor the city, the Douro River, and approaching enemies.
-1. Why Does the Cathedral Resemble a Fortress?
-Construction began in the 12th century, when Portugal was just emerging as an independent kingdom.
-Notice the two massive towers, thick granite walls, and narrow windows. Built in the Romanesque style, the cathedral strongly resembles a medieval castle.
-Above the main portal sits a large round rose window (rosácea), one of the cathedral’s best-preserved original medieval features.
-Over the centuries, later renovations added Gothic and Baroque architectural elements.
-2. Royal Wedding — February 14, 1387
-It was here that King John I of Portugal (Dom João I) married the English princess Philippa of Lancaster.
-This union was a critical diplomatic milestone that solidified the alliance between Portugal and England (established by the Treaty of Windsor).
-The city was adorned with flowers and aromatic herbs, and the royal wedding was celebrated with public festivities lasting for days.
-Curious detail: The ceremony took place on February 14, a date universally associated today with Valentine's Day.
-3. Baptism of the Future Navigator
-In 1394, Prince Henry, son of John I and Philippa of Lancaster, was born in Porto.
-He was baptized in this cathedral and later became known to history as Henry the Navigator (Infante Dom Henrique).
-The prince was the driving force behind the organization and funding of Portugal's maritime expeditions down the western coast of Africa, though he personally took part in very few of the voyages associated with his name.
-4. Interior Highlights
- * The Silver Altar: In the Chapel of the Holy Sacrament (Capela do Santíssimo Sacramento), you can admire an opulent silver altarpiece crafted by Porto's master silversmiths.
- * The Gothic Cloister: Tucked behind the sanctuary walls is a 14th-century Gothic cloister framed by vaulted arcades and decorated with magnificent 18th-century azulejo tile panels.
-5. Serpents, Dragons, and Medieval Beasts
-Medieval artisans frequently carved mythical creatures, beasts, and expressive grotesque faces into religious monuments.
-In Christian iconography, dragons often personified evil, danger, and spiritual chaos, while their subjugation symbolized the triumph of virtue and divine order.
+      <!-- Летучие мыши -->
+      <svg class="bat bat-1" viewBox="0 0 40 20">
+        <path d="M20 8 C16 0 8 1 0 6 C5 6 7 9 8 13 C11 10 14 10 16 13 C17 11 19 11 20 14 C21 11 23 11 24 13 C26 10 29 10 32 13 C33 9 35 6 40 6 C32 1 24 0 20 8 Z"/>
+      </svg>
+      <svg class="bat bat-2" viewBox="0 0 40 20">
+        <path d="M20 8 C16 0 8 1 0 6 C5 6 7 9 8 13 C11 10 14 10 16 13 C17 11 19 11 20 14 C21 11 23 11 24 13 C26 10 29 10 32 13 C33 9 35 6 40 6 C32 1 24 0 20 8 Z"/>
+      </svg>
+      <svg class="bat bat-3" viewBox="0 0 40 20">
+        <path d="M20 8 C16 0 8 1 0 6 C5 6 7 9 8 13 C11 10 14 10 16 13 C17 11 19 11 20 14 C21 11 23 11 24 13 C26 10 29 10 32 13 C33 9 35 6 40 6 C32 1 24 0 20 8 Z"/>
+      </svg>
 
-</p>
+      <h2 class="task-title">A Cripta do Mosteiro de São Bento
+Localização: Estação de São Bento</h2>
+
+      <!-- Светящаяся линия маршрута -->
+      <svg class="route" viewBox="0 0 220 26" aria-hidden="true">
+        <path d="M6 13 C30 -2 50 -2 70 13 S110 28 130 13 S190 -2 214 13"/>
+        <circle cx="6" cy="13" r="3.5"/>
+        <circle cx="110" cy="19" r="3"/>
+        <circle cx="214" cy="13" r="3.5"/>
+      </svg>
+
+      <div class="task-ru">
+        <p> Lenda: 👻 A Fenda Fantasma: O Segredo da Casa Entre Duas Igrejas
+
+Entre duas igrejas, a Igreja do Carmo e a Igreja dos Carmelitas, existe uma casa minúscula, considerada uma das casas mais estreitas do mundo. Mas poucas pessoas sabem porque foi construída exatamente neste lugar.
+
+Segundo uma antiga lenda, as duas igrejas foram construídas lado a lado, mas entre elas existia uma fronteira invisível. Numa viviam as freiras e na outra os monges. Era proibido encontrarem-se, falar ou até olhar uns para os outros. Dizem que, um dia, um jovem monge e uma noviça se apaixonaram, quebrando todas as regras.
+
+Quando descobriram o seu amor proibido, foram castigados. E, entre as duas igrejas, foi construída uma casa estreita para as separar para sempre.
+
+Mas os habitantes locais contam que as almas dos dois apaixonados nunca encontraram a paz. Nas noites escuras, ouvem-se sussurros vindos da passagem estreita e, por vezes, aparece uma luz nas janelas, mesmo quando não está ninguém dentro da casa.
+
+Dizem que, na noite de Halloween, é possível ouvir duas vozes: uma chama da Igreja do Carmo e a outra responde da Igreja dos Carmelitas. Até hoje, continuam à procura um do outro através das paredes de pedra.
+
+E se, ao passares entre as duas igrejas, sentires um toque gelado no ombro, não te voltes. Talvez alguém esteja apenas a tentar atravessar o teu corpo para finalmente reencontrar o seu amor perdido…
+
+Encantamento: Passa pelo estreito espaço entre as paredes dos dois templos. Quem conseguir atravessar sem tocar nas pedras ficará livre do mau-olhado de Halloween.</p>
+      </div>
+
+      <div class="footer" aria-hidden="true">
+        <span class="pumpkins">🎃🎃</span>
+        <span class="ghost">👻</span>
+      </div>
     </div>
   </div>
 
